@@ -3,7 +3,6 @@ using CraftingCalculator.Calculations.Gold;
 using CraftingCalculator.Calculations.Invention;
 using CraftingCalculator.Crafting;
 using CraftingCalculator.Magic;
-using System.Linq.Expressions;
 
 namespace CraftingCalculator
 {
@@ -24,7 +23,7 @@ namespace CraftingCalculator
 
             for (int i = 0; i < day; ++i)
             {
-                DateTime d = new DateTime(year, month, i + 1);
+                DateTime d = new(year, month, i + 1);
 
                 if (d.DayOfWeek == DayOfWeek.Saturday)
                 {
@@ -35,13 +34,11 @@ namespace CraftingCalculator
             saturday_label.Text = $"Saturdays in the month: {count} days.";
         }
 
-        private bool AlchemyCraft = false;
-        private bool MagicCraft = false;
-        private int MundaneTab = 0;
-        private int AlchemyTab = 1;
-        private int MagicTab = 2;
-        private int InventionTab = 3;
-        private int GoldTab = 4;
+        private readonly int MundaneTab = 0;
+        private readonly int AlchemyTab = 1;
+        private readonly int MagicTab = 2;
+        private readonly int InventionTab = 3;
+        private readonly int GoldTab = 4;
         // CraftingTabs.TabPages[0]
         private void CraftItem(object sender, EventArgs e)
         {
@@ -77,7 +74,7 @@ namespace CraftingCalculator
 
         private void AlchemyCrafting()
         {
-            Alchemy_ResultForm Results = new(int.Parse(AlchemyDCInput.Text), 0, int.Parse(BatchInput.Text), int.Parse(CraftCheckResultInput.Text), int.Parse(CostInput.Text));
+            Alchemy_ResultForm Results = new(int.Parse(AlchemyDCInput.Text), int.Parse(BatchInput.Text), int.Parse(CraftCheckResultInput.Text), int.Parse(CostInput.Text));
 
             Results = Alchemy_Crafting.Crafting(Results);
 
@@ -91,7 +88,7 @@ namespace CraftingCalculator
 
         private void MagicCrafting()
         {
-            Magic_ResultForm Results = new(0, 0, int.Parse(CostInput.Text));
+            Magic_ResultForm Results = new(int.Parse(CostInput.Text));
 
             Results = Magic_ReducedDC.EndDC(Results, int.Parse(MagicRequirementInput.Text), int.Parse(MagicCasterInput.Text));
 
@@ -101,14 +98,14 @@ namespace CraftingCalculator
 
         private void InventionCrafting()
         {
-            Invention_Result Results = new Invention_Result(int.Parse(Invention_level.Text), int.Parse(Invention_improvement.Text));
+            Invention_Result Results = new(int.Parse(Invention_level.Text), int.Parse(Invention_improvement.Text));
 
             Invention_ShowResult(Results);
         }
 
         private void GoldCrafting()
         {
-            Gold_Result Results = new Gold_Result(int.Parse(Gold_days.Text), int.Parse(Gold_check.Text), int.Parse(Gold_level.Text), int.Parse(Gold_current_cash.Text), int.Parse(Gold_total_cash.Text));
+            Gold_Result Results = new(int.Parse(Gold_days.Text), int.Parse(Gold_check.Text), int.Parse(Gold_level.Text), int.Parse(Gold_current_cash.Text), int.Parse(Gold_total_cash.Text));
 
             Gold_ShowResult(Results);
         }
@@ -177,8 +174,7 @@ namespace CraftingCalculator
         #region Input Validation
         private string ValidateInput(string input)
         {
-            int i;
-            if (int.TryParse(input, out i))
+            if (int.TryParse(input, out _))
             {
                 return input;
             }

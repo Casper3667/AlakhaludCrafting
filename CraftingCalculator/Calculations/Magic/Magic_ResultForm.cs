@@ -6,10 +6,8 @@
         public int CraftingTime;
         public double Cost;
 
-        public Magic_ResultForm(int dc, int time, double cost)
+        public Magic_ResultForm(double cost)
         {
-            DC = dc;
-            CraftingTime = time;
             Cost = cost;
         }
     }

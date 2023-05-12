@@ -7,7 +7,7 @@
             if (Cartridge)
                 Results.Cost = Results.Cost / 2 * Results.Batches;
             else
-                Results.Cost = Results.Cost / 3 * Results.Batches;
+                Results.Cost = (Results.Cost / 3) * Results.Batches;
 
             return Results;
         }
