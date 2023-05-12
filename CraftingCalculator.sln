@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CraftingCalculator", "CraftingCalculator\CraftingCalculator.csproj", "{D910C458-8E28-41E4-A561-A5029B486C45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CraftingUnitTest", "CraftingUnitTest\CraftingUnitTest.csproj", "{18797174-0FE2-4D02-B25B-D128833706ED}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{D910C458-8E28-41E4-A561-A5029B486C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D910C458-8E28-41E4-A561-A5029B486C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D910C458-8E28-41E4-A561-A5029B486C45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18797174-0FE2-4D02-B25B-D128833706ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18797174-0FE2-4D02-B25B-D128833706ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18797174-0FE2-4D02-B25B-D128833706ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18797174-0FE2-4D02-B25B-D128833706ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

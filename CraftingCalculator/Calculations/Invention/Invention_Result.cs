@@ -2,7 +2,7 @@
 {
     public class Invention_Result
     {
-        private static readonly int Base_Price = 500;
+        public static readonly int Base_Price = 500;
         public int CraftingTime;
         public double Cost;
         public double Sell;
