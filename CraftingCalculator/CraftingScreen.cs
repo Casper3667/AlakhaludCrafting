@@ -6,9 +6,9 @@ using CraftingCalculator.Magic;
 
 namespace CraftingCalculator
 {
-    public partial class Form1 : Form
+    public partial class CraftingScreen : Form
     {
-        public Form1()
+        public CraftingScreen()
         {
             InitializeComponent();
             SaturdayCheck();

@@ -1,6 +1,6 @@
 ﻿namespace CraftingCalculator
 {
-    partial class Form1
+    partial class CraftingScreen
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CraftingScreen));
             AlchemyDCInput = new TextBox();
             CraftingDCInput = new ComboBox();
             AlchemyDCLabel = new Label();
