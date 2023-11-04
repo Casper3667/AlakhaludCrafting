@@ -31,7 +31,7 @@ namespace CraftingCalculator
                 }
             }
 
-            saturday_label.Text = $"Saturdays in the month: {count} days.";
+            Label_SaturdayResult.Text = $"Saturdays in the month: {count} days.";
         }
 
         private readonly int MundaneTab = 0;
@@ -42,15 +42,15 @@ namespace CraftingCalculator
         // CraftingTabs.TabPages[0]
         private void CraftItem(object sender, EventArgs e)
         {
-            if (CraftingTabs.SelectedTab == CraftingTabs.TabPages[MundaneTab])
+            if (Tab_Crafting.SelectedTab == Tab_Crafting.TabPages[MundaneTab])
                 MundaneCrafting();
-            else if (CraftingTabs.SelectedTab == CraftingTabs.TabPages[AlchemyTab])
+            else if (Tab_Crafting.SelectedTab == Tab_Crafting.TabPages[AlchemyTab])
                 AlchemyCrafting();
-            else if (CraftingTabs.SelectedTab == CraftingTabs.TabPages[MagicTab])
+            else if (Tab_Crafting.SelectedTab == Tab_Crafting.TabPages[MagicTab])
                 MagicCrafting();
-            else if (CraftingTabs.SelectedTab == CraftingTabs.TabPages[InventionTab])
+            else if (Tab_Crafting.SelectedTab == Tab_Crafting.TabPages[InventionTab])
                 InventionCrafting();
-            else if (CraftingTabs.SelectedTab == CraftingTabs.TabPages[GoldTab])
+            else if (Tab_Crafting.SelectedTab == Tab_Crafting.TabPages[GoldTab])
                 GoldCrafting();
             else
                 MundaneCrafting();
@@ -59,7 +59,7 @@ namespace CraftingCalculator
         #region Crafting
         private void MundaneCrafting()
         {
-            Mundane_Result Results = new(0, 0, MasterworkCheck.Checked, CraftingDCInput.Text, int.Parse(CraftCheckResultInput.Text), int.Parse(CostInput.Text));
+            Mundane_Result Results = new(0, 0, Check_Masterwork.Checked, Input_CraftingDC.Text, int.Parse(Input_CraftCheckResult.Text), int.Parse(Input_Cost.Text));
 
             Results = Mundane_Crafting.Craft(Results); // Time, DC, Masterwork
 
@@ -74,23 +74,23 @@ namespace CraftingCalculator
 
         private void AlchemyCrafting()
         {
-            Alchemy_ResultForm Results = new(int.Parse(AlchemyDCInput.Text), int.Parse(BatchInput.Text), int.Parse(CraftCheckResultInput.Text), int.Parse(CostInput.Text));
+            Alchemy_ResultForm Results = new(int.Parse(Input_AlchemyDC.Text), int.Parse(Check_Batch.Text), int.Parse(Input_CraftCheckResult.Text), int.Parse(Input_Cost.Text));
 
             Results = Alchemy_Crafting.Crafting(Results);
 
-            if (Results.CraftCheck >= Results.DC + 5 || CartridgeCheck.Checked)
+            if (Results.CraftCheck >= Results.DC + 5 || Check_Cartridge.Checked)
             {
-                Results = Alchemy_ReducedDC.EndDC(Results, CartridgeCheck.Checked);
+                Results = Alchemy_ReducedDC.EndDC(Results, Check_Cartridge.Checked);
             }
-            Results = Alchemy_CostCalc.CostCalculator(Results, CartridgeCheck.Checked);
+            Results = Alchemy_CostCalc.CostCalculator(Results, Check_Cartridge.Checked);
             Alchemy_ShowResult(Results);
         }
 
         private void MagicCrafting()
         {
-            Magic_ResultForm Results = new(int.Parse(CostInput.Text));
+            Magic_ResultForm Results = new(int.Parse(Input_Cost.Text));
 
-            Results = Magic_ReducedDC.EndDC(Results, int.Parse(MagicRequirementInput.Text), int.Parse(MagicCasterInput.Text));
+            Results = Magic_ReducedDC.EndDC(Results, int.Parse(Input_MagicRequirement.Text), int.Parse(Input_MagicCaster.Text));
 
             Results = Magic_CostCalc.CostCalculator(Results);
             Magic_ShowResult(Results);
@@ -98,14 +98,14 @@ namespace CraftingCalculator
 
         private void InventionCrafting()
         {
-            Invention_Result Results = new(int.Parse(Invention_level.Text), int.Parse(Invention_improvement.Text));
+            Invention_Result Results = new(int.Parse(Input_InventionLevel.Text), int.Parse(Input_InventionImprovement.Text));
 
             Invention_ShowResult(Results);
         }
 
         private void GoldCrafting()
         {
-            Gold_Result Results = new(int.Parse(Gold_days.Text), int.Parse(Gold_check.Text), int.Parse(Gold_level.Text), int.Parse(Gold_current_cash.Text), int.Parse(Gold_total_cash.Text));
+            Gold_Result Results = new(int.Parse(Input_GoldDays.Text), int.Parse(Input_GoldCheck.Text), int.Parse(Input_GoldLevel.Text), int.Parse(Input_GoldCurrentCash.Text), int.Parse(Input_GoldTotalCash.Text));
 
             Gold_ShowResult(Results);
         }
@@ -114,59 +114,59 @@ namespace CraftingCalculator
         #region ShowResults
         internal void Magic_ShowResult(Magic_ResultForm Results)
         {
-            ResultTime.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
-            ResultCost.Text = $"Cost: {Results.Cost.ToString()} GP.";
-            ResultDC.Text = $"DC: {Results.DC.ToString()}.";
-            ResultType.Text = "Type: Magical.";
+            Label_Result_Time.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
+            Label_Result_Cost.Text = $"Cost: {Results.Cost.ToString()} GP.";
+            Label_Result_DC.Text = $"DC: {Results.DC.ToString()}.";
+            Label_Result_Type.Text = "Type: Magical.";
         }
 
         internal void Alchemy_ShowResult(Alchemy_ResultForm Results)
         {
-            if (Results.CraftCheck < Results.DC && !CartridgeCheck.Checked)
-                ResultTime.Text = $"Crafting time: Failed to craft.";
+            if (Results.CraftCheck < Results.DC && !Check_Cartridge.Checked)
+                Label_Result_Time.Text = $"Crafting time: Failed to craft.";
             else
-                ResultTime.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
-            ResultCost.Text = $"Cost: {Results.Cost.ToString()} GP.";
-            if (CartridgeCheck.Checked)
+                Label_Result_Time.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
+            Label_Result_Cost.Text = $"Cost: {Results.Cost.ToString()} GP.";
+            if (Check_Cartridge.Checked)
             {
-                ResultType.Text = "Type: Alchemical cartridge.";
-                ResultDC.Text = $"DC: No DC.";
+                Label_Result_Type.Text = "Type: Alchemical cartridge.";
+                Label_Result_DC.Text = $"DC: No DC.";
             }
             else
             {
-                ResultType.Text = "Type: Alchemical.";
-                ResultDC.Text = $"DC: {Results.DC.ToString()}.";
+                Label_Result_Type.Text = "Type: Alchemical.";
+                Label_Result_DC.Text = $"DC: {Results.DC.ToString()}.";
             }
         }
 
         internal void Mundane_ShowResult(Mundane_Result Results)
         {
             if (Results.CraftCheck < Results.DC)
-                ResultTime.Text = $"Crafting time: Failed to craft.";
+                Label_Result_Time.Text = $"Crafting time: Failed to craft.";
             else
-                ResultTime.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
-            ResultCost.Text = $"Cost: {Results.Cost.ToString()} GP.";
-            ResultDC.Text = $"DC: {Results.DC.ToString()}.";
-            ResultType.Text = "Type: Mundane.";
+                Label_Result_Time.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
+            Label_Result_Cost.Text = $"Cost: {Results.Cost.ToString()} GP.";
+            Label_Result_DC.Text = $"DC: {Results.DC.ToString()}.";
+            Label_Result_Type.Text = "Type: Mundane.";
         }
 
         internal void Invention_ShowResult(Invention_Result Results)
         {
-            ResultTime.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
-            ResultCost.Text = $"Cost: {Results.Cost.ToString()} GP and {Results.Sell} purchase.";
-            ResultType.Text = "Type: Invention.";
-            ResultDC.Text = $"DC:";
+            Label_Result_Time.Text = $"Crafting time: {Results.CraftingTime.ToString()} days.";
+            Label_Result_Cost.Text = $"Cost: {Results.Cost.ToString()} GP and {Results.Sell} purchase.";
+            Label_Result_Type.Text = "Type: Invention.";
+            Label_Result_DC.Text = $"DC:";
         }
 
         internal void Gold_ShowResult(Gold_Result Results)
         {
-            Gold_result_label.Text = $"Result: {Results.Result.ToString()} GP.";
-            Gold_current_cash_label.Text = $"Current cash: {Results.CurrentCash.ToString()} GP.";
-            Gold_total_cash_label.Text = $"Total cash: {Results.TotalCash.ToString()} GP.";
-            ResultType.Text = "Type: Gold earning.";
-            ResultTime.Text = $"Crafting time:";
-            ResultCost.Text = $"Cost:";
-            ResultDC.Text = $"DC:";
+            Label_GoldResult.Text = $"Result: {Results.Result.ToString()} GP.";
+            Label_GoldCurrentCashResult.Text = $"Current cash: {Results.CurrentCash.ToString()} GP.";
+            Label_GoldTotalCashResult.Text = $"Total cash: {Results.TotalCash.ToString()} GP.";
+            Label_Result_Type.Text = "Type: Gold earning.";
+            Label_Result_Time.Text = $"Crafting time:";
+            Label_Result_Cost.Text = $"Cost:";
+            Label_Result_DC.Text = $"DC:";
         }
 
         #endregion
@@ -183,27 +183,27 @@ namespace CraftingCalculator
 
         private void AlchemyDCInput_TextChanged(object sender, EventArgs e)
         {
-            AlchemyDCInput.Text = ValidateInput(AlchemyDCInput.Text);
+            Input_AlchemyDC.Text = ValidateInput(Input_AlchemyDC.Text);
         }
 
         private void CraftCheckResultInput_TextChanged(object sender, EventArgs e)
         {
-            CraftCheckResultInput.Text = ValidateInput(CraftCheckResultInput.Text);
+            Input_CraftCheckResult.Text = ValidateInput(Input_CraftCheckResult.Text);
         }
 
         private void CostInput_TextChanged(object sender, EventArgs e)
         {
-            CostInput.Text = ValidateInput(CostInput.Text);
+            Input_Cost.Text = ValidateInput(Input_Cost.Text);
         }
 
         private void MagicRequirementInput_Leave(object sender, EventArgs e)
         {
-            MagicRequirementInput.Text = ValidateInput(MagicRequirementInput.Text);
+            Input_MagicRequirement.Text = ValidateInput(Input_MagicRequirement.Text);
         }
 
         private void MagicCasterInput_Leave(object sender, EventArgs e)
         {
-            MagicCasterInput.Text = ValidateInput(MagicCasterInput.Text);
+            Input_MagicCaster.Text = ValidateInput(Input_MagicCaster.Text);
         }
         #endregion
 
@@ -211,17 +211,17 @@ namespace CraftingCalculator
 
         private void CraftingDCInput_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (CraftingDCInput.SelectedIndex == 0)
+            if (Input_CraftingDC.SelectedIndex == 0)
             {
-                ComplexityDescBox.Text = "Very simple" +
+                Desc_Complexity.Text = "Very simple" +
                 "\nThese items are composed of a single piece, made of a single material, and contain no moving parts. " +
                 "\n\nVery Simple items include simple weapons in the Hammer, Monk, Spear, " +
                 "and Thrown weapon groups, and all items made with Craft (Blacksmithing), " +
                 "Craft (Baskets), and Craft (Cloth).";
             }
-            else if (CraftingDCInput.SelectedIndex == 1)
+            else if (Input_CraftingDC.SelectedIndex == 1)
             {
-                ComplexityDescBox.Text = "Simple" +
+                Desc_Complexity.Text = "Simple" +
                     "\nThese items are composed of one or more pieces that are " +
                     "individually easy to make, and contain no moving parts." +
                     "\n" +
@@ -229,9 +229,9 @@ namespace CraftingCalculator
                     "ammunition, caltrops, and all items made with Craft (Clothing), " +
                     "Craft (Glass), Craft (Leather), Craft (Pottery), and Craft (Shoes).";
             }
-            else if (CraftingDCInput.SelectedIndex == 2)
+            else if (Input_CraftingDC.SelectedIndex == 2)
             {
-                ComplexityDescBox.Text = "Moderate" +
+                Desc_Complexity.Text = "Moderate" +
                     "\nThese items are made of several parts (including moving parts) " +
                     "and diverse materials that must be integrated into a whole. " +
                     "\n" +
@@ -240,9 +240,9 @@ namespace CraftingCalculator
                     "Craft (Carpentry), Craft (Jewelry), Craft (Instruments), " +
                     "Craft (Stonemasonry), Craft (Taxidermy), and Craft (Tools). ";
             }
-            else if (CraftingDCInput.SelectedIndex == 3)
+            else if (Input_CraftingDC.SelectedIndex == 3)
             {
-                ComplexityDescBox.Text = "Complex" +
+                Desc_Complexity.Text = "Complex" +
                     "\nThese items have many parts (including moving parts) " +
                     "composed of diverse materials that take skill to integrate into a " +
                     "whole. Alternatively, these items require a great degree of " +
@@ -253,9 +253,9 @@ namespace CraftingCalculator
                     "made with Craft (Books), Craft (Calligraphy), Craft (Paintings), " +
                     "Craft (Sculptures), and Craft (Tattoos)";
             }
-            else if (CraftingDCInput.SelectedIndex == 4)
+            else if (Input_CraftingDC.SelectedIndex == 4)
             {
-                ComplexityDescBox.Text = "Very complex" +
+                Desc_Complexity.Text = "Very complex" +
                     "\nThese items contain a great number of moving parts that " +
                     "require advanced engineering knowledge to integrate into a whole." +
                     "\n" +
